@@ -36,6 +36,7 @@ cardText.addEventListener('command', (event) => {
       answerFirst = true;
       button.textContent = "Display front first";
     }
+    changeCard();
     updateText();
   }
   if(event.command === '--editCards') {
