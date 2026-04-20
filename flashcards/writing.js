@@ -1,8 +1,6 @@
+const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 const editor = document.getElementById("editor");
 const grid = document.getElementById("grid");
-const addCardButton = document.getElementById('addCardButton');
-const swapButton = document.getElementById('swapButton');
-const randomOrderButton = document.getElementById('randomizeButton');
 let uniqueIdCounter = 0;
 let order = [];
 
@@ -10,14 +8,12 @@ editor.childNodes.forEach(element => {
     element.hidden = true;
 });
 
-swapButton.addEventListener('keydown', (event) => {
-  if(event.code === 'Space')
-    event.preventDefault();
-});
-randomOrderButton.addEventListener('keydown', (event) => {
-  if(event.code === 'Space')
-    event.preventDefault();
-});
+for(i=0; i<document.getElementsByTagName("button").length; i++) {
+  document.getElementsByTagName("button")[i].addEventListener('keydown', (event) => {
+    if(event.code === 'Space')
+      event.preventDefault();
+  });
+}
 
 cardText.addEventListener('command', (event) => {
   if(event.command === '--editCards') {
@@ -33,32 +29,39 @@ cardText.addEventListener('command', (event) => {
     });
     updateText();
   }
-  if(event.command === '--save') {
-    localStorage.clear();
-    let newData = new Object();
-    newData['cards'] = [];
-    for(i=0; i<cardCount();i++) {
-      newData['cards'][i] = {};
-      newData['cards'][i]['question'] = getFront(i);
-      newData['cards'][i]['answer'] = getBack(i);
-      console.log(newData);
-    }
-    localStorage.setItem('cardData', JSON.stringify(newData));
-  }
+  if(event.command === '--save')
+    save();
   if(event.command === '--reset') {
     clearCards();
     loadData();
   }
 });
 
+async function save() {
+  localStorage.clear();
+  let newData = new Object();
+  newData['cards'] = [];
+  for(i=0; i<cardCount();i++) {
+    newData['cards'][i] = {};
+    newData['cards'][i]['question'] = getFront(i);
+    newData['cards'][i]['answer'] = getBack(i);
+    console.log(newData);
+  }
+  localStorage.setItem('cardData', JSON.stringify(newData));
+  document.getElementById("savedText").hidden = false;
+  await wait(3000);
+  document.getElementById("savedText").hidden = true;
+}
+
 grid.addEventListener('command', (event) => {
   if(event.command == '--addCard'){
     addCard();
   }
   let commandString = event.command;
-  if(commandString.includes('--removeCard')) {
-    removeCard(getIndex(commandString));
-  }
+  if(commandString != null)
+    if(commandString.includes('--removeCard')) {
+      removeCard(getIndex(commandString));
+    }
 });
 
 function getIndex(id) {
@@ -138,13 +141,17 @@ function resetOrder() {
   for(i=0;i<cardCount();i++) {
     order[i]=i;
   }
+  card = 0;
+  flip=false;
+  changeCard();
 }
+if(data != null) {
+  for(i=0;i<data['cards'].length;i++) {
+    order[i]=i;
+  }
 
-for(i=0;i<data['cards'].length;i++) {
-  order[i]=i;
-}
-
-for(i=0; i<data['cards'].length;) {
-  addCard(data['cards'][i]['question'], data['cards'][i]['answer']);
+  for(i=0; i<data['cards'].length;) {
+    addCard(data['cards'][i]['question'], data['cards'][i]['answer']);
+  }
 }
 updateText();

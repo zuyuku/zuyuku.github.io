@@ -4,8 +4,8 @@
         <title>Flashcards</title>
     </head>
     <body>
-        <p style="font-size: large; text-align: center; color: gray; font-style: italic; height: 0px;">Press space to flip cards. Left and right arrows to change card.</p>
         <div id="viewer">
+            <p style="font-size: large; text-align: center; color: gray; font-style: italic; height: 0px;">Press space to flip cards. Left and right arrows to change card.</p>
             <div id="card">
                 <div id="textBox"></div>
             </div>
@@ -36,6 +36,7 @@
                 <button id="addCardButton" commandfor="grid" command="--addCard">Add Card</button>
             </div>
             <div style="width:100%; position: fixed; text-align: center; left: 0; bottom: 5%;">
+                <p id="savedText" style="font-style: italic; font-size: medium;" hidden="">Cards saved!</p>
                 <button id="addCardButton" commandfor="grid" command="--addCard">Add Card</button>
                 <button id="viewerButton" commandfor="textBox" command="--viewCards">View Cards</button>
                 <button id="saveButton" commandfor="textBox" command="--save">Save</button>

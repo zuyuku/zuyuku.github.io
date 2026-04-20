@@ -59,7 +59,7 @@ document.addEventListener('keydown', (event) => {
   // console.log(`Key pressed: ${event.key}`);
   // Specific key detection
   if(cardCount()==0)
-    return;
+      return;
   if (event.key === 'ArrowLeft') {
     decreaseCard();
   } else if (event.key === 'ArrowRight') {
@@ -101,14 +101,16 @@ function increaseCard() {
     return;
   flip = false;
   card++;
-  cardText.style.animation = cardText.style.animation.includes('textHide2') ? ".3s textHide" : ".3s textHide2";
-  cardDiv.style.animation = cardText.style.animation.includes('textHide2') ? ".3s textHide" : ".3s textHide2";
+  changeCard();
 }
 function decreaseCard() {
   if(!card>0)
     return;
   flip = false;
   card--;
+  changeCard();
+}
+function changeCard() {
   cardText.style.animation = cardText.style.animation.includes('textHide2') ? ".3s textHide" : ".3s textHide2";
   cardDiv.style.animation = cardText.style.animation.includes('textHide2') ? ".3s textHide" : ".3s textHide2";
 }
@@ -121,6 +123,9 @@ function randomize() {
     order = removeItem(order, random);
   } while (order.length>0)
   order = temp;
+  card = 0;
+  flip = false;
+  changeCard();
 }
 function removeItem(list, index) {
   let temp = [];
