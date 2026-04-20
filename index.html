@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Flashcards</title>
+    </head>
+    <body>
+        <div id="viewer">
+            <div id="card">
+                <div id="textBox"></div>
+            </div>
+            <div style="width:100%; position: fixed; text-align: center; left: 0; bottom: 5%;">
+                <div>
+                    <p id="qa"></p>
+                    <p id="counter"></p>
+                </div>
+                <div>
+                    <button id="randomizeButton" commandfor="textBox" command="--randomize">Randomize Order</button>
+                    <button id="orderButton" commandfor="textBox" command="--order">Reset Order</button>
+                    <button id="swapButton" commandfor="textBox" command="--swapQA">Display back first</button>
+                    <button id="editorButton" commandfor="textBox" command="--editCards">Edit cards</button>
+                </div>
+            </div>
+        </div>
+        <div id="editor" hidden="">
+            <div id="cardTable" style="margin-bottom: 200px;">
+                <div id="grid" class="container">
+                    <div>
+                        Question
+                    </div>
+                    <div>
+                        Answer
+                    </div>
+                    <div></div>
+                </div>
+                <button id="addCardButton" commandfor="grid" command="--addCard">Add Card</button>
+            </div>
+            <div style="width:100%; position: fixed; text-align: center; left: 0; bottom: 5%;">
+                <button id="addCardButton" commandfor="grid" command="--addCard">Add Card</button>
+                <button id="viewerButton" commandfor="textBox" command="--viewCards">View Cards</button>
+                <button id="saveButton" commandfor="textBox" command="--save">Save</button>
+                <button id="resetButton" commandfor="textBox" command="--reset">Reset to Defaults</button>
+            </div>
+        </div>
+    </body>
+    <script src="viewing.js" defer></script>
+    <script src="writing.js" defer></script>
+    <link rel="stylesheet" href="styles.css">
+</html>
