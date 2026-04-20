@@ -45,7 +45,6 @@ async function save() {
     newData['cards'][i] = {};
     newData['cards'][i]['question'] = getFront(i);
     newData['cards'][i]['answer'] = getBack(i);
-    console.log(newData);
   }
   localStorage.setItem('cardData', JSON.stringify(newData));
   document.getElementById("savedText").hidden = false;
