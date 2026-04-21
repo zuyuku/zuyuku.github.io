@@ -72,7 +72,7 @@ textarea {
     width:300px;
 }
 
-button {
+button, input[type="file"]::file-selector-button {
     background-color: light-grey;
     border: none;
     padding: 10px;

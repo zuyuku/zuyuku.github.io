@@ -24,6 +24,7 @@ async function loadData() {
   }
   for(i=0; i<data['cards'].length;i++)
     addCard(data['cards'][i]['question'], data['cards'][i]['answer']);
+  name.value = data['name'];
   updateText();
 }
 

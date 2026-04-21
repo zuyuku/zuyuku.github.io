@@ -1,6 +1,7 @@
 const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 const editor = document.getElementById("editor");
 const grid = document.getElementById("grid");
+const name = document.getElementById("deckName");
 let uniqueIdCounter = 0;
 let order = [];
 
@@ -37,8 +38,23 @@ cardText.addEventListener('command', (event) => {
   }
 });
 
-async function save() {
+function save() {
   localStorage.clear();
+  let newData = createData();
+  localStorage.setItem('cardData', JSON.stringify(newData));
+  flashText("Cards saved!");
+
+}
+
+async function flashText(text) {
+  const savedText = document.getElementById("savedText");
+  savedText.textContent = text;
+  savedText.hidden = false;
+  await wait(3000);
+  savedText.hidden = true;
+}
+
+function createData() {
   let newData = new Object();
   newData['cards'] = [];
   for(i=0; i<cardCount();i++) {
@@ -46,10 +62,8 @@ async function save() {
     newData['cards'][i]['question'] = getFront(i);
     newData['cards'][i]['answer'] = getBack(i);
   }
-  localStorage.setItem('cardData', JSON.stringify(newData));
-  document.getElementById("savedText").hidden = false;
-  await wait(3000);
-  document.getElementById("savedText").hidden = true;
+  newData['name'] = name.value;
+  return newData;
 }
 
 grid.addEventListener('command', (event) => {
@@ -61,6 +75,9 @@ grid.addEventListener('command', (event) => {
     if(commandString.includes('--removeCard')) {
       removeCard(getIndex(commandString));
     }
+  if(event.command == '--export'){
+    downloadJson(createData(), name.value + '-flashcards.json');
+  }
 });
 
 function getIndex(id) {
@@ -123,18 +140,18 @@ function addCard(question, answer) {
 }
 
 function cardCount() {
-  return grid.children.length/3-1;
+  return grid.children.length/3-2;
 }
 
 function getFront(index) {
-  return grid.children[index*3+3].children[0].value;
+  return grid.children[index*3+6].children[0].value;
 }
 function getBack(index) {
-  return grid.children[index*3+4].children[0].value;
+  return grid.children[index*3+7].children[0].value;
 }
 function clearCards() {
   while(cardCount()>0)
-    removeCard(5);
+    removeCard(8);
 }
 function resetOrder() {
   for(i=0;i<cardCount();i++) {
@@ -153,4 +170,3 @@ if(data != null) {
     addCard(data['cards'][i]['question'], data['cards'][i]['answer']);
   }
 }
-updateText();

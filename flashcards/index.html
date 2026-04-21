@@ -25,6 +25,13 @@
         <div id="editor" hidden="">
             <div id="cardTable" style="margin-bottom: 200px;">
                 <div id="grid" class="container">
+                    <div style="text-align: right;">
+                        Deck Name:
+                    </div>
+                    <div style="text-align: left;">
+                        <input id="deckName" style="font-family: 'Times New Roman', Times, serif; font-size: medium;">
+                    </div>
+                    <div></div>
                     <div>
                         Question
                     </div>
@@ -41,10 +48,14 @@
                 <button id="viewerButton" commandfor="textBox" command="--viewCards">View Cards</button>
                 <button id="saveButton" commandfor="textBox" command="--save">Save</button>
                 <button id="resetButton" commandfor="textBox" command="--reset">Reset to Defaults</button>
+                <button id="exportButton" commandfor="grid" command="--export">Export Deck</button>
+                <input type="file">
             </div>
         </div>
     </body>
+    <script src="import.js?v=2" defer></script>
     <script src="viewing.js?v=2" defer></script>
     <script src="writing.js?v=2" defer></script>
+    <script src="export.js?v=2" defer></script>
     <link rel="stylesheet" href="styles.css?v=1">
 </html>
